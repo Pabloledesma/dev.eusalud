@@ -28,8 +28,7 @@ Route::post('info/certificado_pagos_profesionales', 'InfoController@certificado_
 Route::get('info/pdf', 'InfoController@generatePdf');
 Route::get('info/form_pago_proveedores', 'InfoController@form_pago_proveedores');
 Route::post('info/pago_proveedores', 'InfoController@pago_proveedores');
-Route::get('testExcel', 'InfoController@form_certificado_pagos_profesionales_excel');
-Route::post('info/testExcel', 'InfoController@testExcel');
+
 
 Route::get('auth/register', ['middleware' => 'manager', function(){
     return view('auth.register');

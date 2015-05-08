@@ -1,5 +1,6 @@
 @extends('eusalud2')
 @section('content')
+
 <div class="container container-fluid">
     <h1>Informe de pago a proveedores</h1>
     <hr/>
