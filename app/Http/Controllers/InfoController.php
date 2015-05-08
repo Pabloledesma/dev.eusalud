@@ -12,29 +12,37 @@ use Maatwebsite\Excel\Excel;
 class InfoController extends Controller {
 
     private $pdf;
-    private $excel; //Temporalmente -> debe estar en Infocontroller
+    private $excel; 
 
     public function __construct(Pdf $pdf, Excel $excel) {
         $this->middleware('auth');
         $this->pdf = $pdf;
         $this->excel = $excel;
     }
-
+    /**
+    * Muestra una lista con los formularios disponibles
+    ***/
     public function index() {
         return view('info.index');
     }
 
     /*
-     * Certificado de pagos a profesionales de la salud
+     * Muestra el formulario para generar el Certificado de pagos a profesionales de la salud
      */
     public function form_certificado_pagos_profesionales() {
         return view('info.certificado_pagos');
     }
 
+    /**
+    * Muestra el formulario para generar el informe de Pago a proveedores
+    ***/
     public function form_pago_proveedores() {
         return view('info.pago_proveedores');
     }
-    
+
+    /**
+    * Muestra el formulario para generar el informe de Pago a proveedores en excel
+    ***/
     public function form_certificado_pagos_profesionales_excel()
     {
         return view('info.certificado_pagos_excel');

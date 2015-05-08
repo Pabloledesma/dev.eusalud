@@ -5,11 +5,11 @@
 | Application Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
 |
 */
+
+/*** 	WelcomeController ***/
+
 Route::get('inicio', 'WelcomeController@index');
 Route::get('quienes-somos', 'WelcomeController@about_us');
 Route::get('vacantes', 'WelcomeController@vacantes');
@@ -20,6 +20,7 @@ Route::get('contacto', 'WelcomeController@contacto');
 Route::post('contacto', 'WelcomeController@sendMsg');
 Route::get('galeria', 'WelcomeController@galeria');
 
+/*** InfoController ***/
 
 Route::get('info', 'InfoController@index');
 Route::get('info/form_certificado_pagos_profesionales', 'InfoController@form_certificado_pagos_profesionales');
@@ -35,11 +36,14 @@ Route::get('auth/register', ['middleware' => 'manager', function(){
 }]);
 Route::post('register', 'UserController@register');
 
-/*** Usuarios ******/
+/*** UserController ***/
+
+//Restringir el uso de este recurso!!
+
 //Route::get('usuarios', ['middleware' => 'manager', function(){
 //    return view('user.index');
 //}]);
-Route::get('usuarios', 'UserController@index');
+Route::get('usuarios', 'UserController@index'); // Temporalmente
 
 Route::post('usuarios/{id}/update', 'UserController@update');
 Route::get('usuarios/{id}/edit', 'UserController@edit');
@@ -50,8 +54,6 @@ Route::get('usuarios/{id}/delete', 'UserController@delete');
 Route::get('censo/{p}', 'CensoController@censo');
 
 Route::get('contactos', 'ContactController@index');
-
-
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
