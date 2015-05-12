@@ -28,6 +28,8 @@ Route::post('info/certificado_pagos_profesionales', 'InfoController@certificado_
 Route::get('info/pdf', 'InfoController@generatePdf');
 Route::get('info/form_pago_proveedores', 'InfoController@form_pago_proveedores');
 Route::post('info/pago_proveedores', 'InfoController@pago_proveedores');
+Route::get('info/form_certificado_ica', 'InfoController@form_certificado_ica');
+Route::post('info/certificado_ica', 'InfoController@certificado_ica');
 
 
 Route::get('auth/register', ['middleware' => 'manager', function(){

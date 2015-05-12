@@ -1,7 +1,7 @@
 @extends('eusalud2')
 @section('content')
 <div class="container container-fluid">
-    <h1>Certificado de pagos a profesionales de la salud</h1>
+    <h1>{{ $headerTitle }}</h1>
     <hr/>
     <div class="row">
 

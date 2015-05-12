@@ -45,6 +45,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 @if( \Auth::user()->user_type != 'Provider'  )
                                     <li><a href="{{ url('info/form_certificado_pagos_profesionales') }}">Certificado de pagos a profesionales de la salud</a></li>
+                                    <li><a href="{{ url('info/form_certificado_ica') }}">Certificado de retensión industria y comercio (ICA)</a></li>
                                 @endif
                                 @if( \Auth::user()->user_type != 'User' )
                                     <li><a href="{{ url('info/form_pago_proveedores') }}">Informe de pago a proveedores</a></li>
