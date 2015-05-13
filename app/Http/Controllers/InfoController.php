@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use function view;
+//use Barryvdh\DomPDF\PDF;
 use DB;
-use Vsmoraes\Pdf\Pdf;
 use Maatwebsite\Excel\Excel;
+use Psy\Util\String;
+use Vsmoraes\Pdf\Pdf;
+use function view;
 
 class InfoController extends Controller {
 
@@ -269,8 +271,9 @@ class InfoController extends Controller {
     ***/ 
     public function form_certificado_ica()
     {
+        $formato_de_salida = false; // Esta variable sera false mientras no esten disponibles los formatos pdf y excel
         $formato = array( 'pdf' => false, 'excel' => false );
-        return view('info.certificado_ica', compact('formato'));
+        return view('info.certificado_ica', compact('formato', 'formato_de_salida'));
     }
 
     /**
@@ -335,13 +338,18 @@ class InfoController extends Controller {
         //return $valor_base;
         if (isset($info, $valor_base) && count($info) > 0 && count($valor_base) > 0) {
 
+//            
+//            $html = view('info.informe_ica_pdf', compact('info', 'input', 'headerTitle', 'valor_base', 'valor_en_letras'))->render();
+//            return $this->pdf->load($html)
+//                            ->filename($fileTitle . date('Y-m-d H:i:s') . '.pdf')
+//                            
+//                            ->download();
+            
+           
             $valor_en_letras = $this->numerotexto( $valor_base[0]->VALOR );
-            /*
-            $html = view('info.informe_ica_pdf', compact('info', 'input', 'headerTitle', 'valor_base', 'valor_en_letras'))->render();
-            return $this->pdf->load($html, array(0, 0, 800, 1300))
-                            ->filename($fileTitle . date('Y-m-d H:i:s') . '.pdf')
-                            ->download();
-*/          return view('info.informe_ica_pdf', compact('info', 'input', 'headerTitle', 'valor_base', 'valor_en_letras'));
+            return view('info.informe_ica_pdf', compact('info', 'input', 'headerTitle', 'valor_base', 'valor_en_letras'));
+            
+ 
         }
 
         return view('info.sin_resultados', compact('headerTitle'));
@@ -352,7 +360,7 @@ class InfoController extends Controller {
     * @param $numero decimal que se quiere convertir
     * @return String
     **/
-    public function numerotexto ($numero) { 
+   function numerotexto ($numero) { 
     // Primero tomamos el numero y le quitamos los caracteres especiales y extras 
     // Dejando solamente el punto "." que separa los decimales 
     // Si encuentra mas de un punto, devuelve error. 
@@ -434,14 +442,14 @@ class InfoController extends Controller {
             break; 
         } 
         $resto-=$corte; 
-        // Sacamos el resultado (primero invertimos el array) 
-            $resultado_inv= array_reverse($resultado, TRUE); 
-            $final=""; 
-            foreach ($resultado_inv as $parte){ 
-                $final.=$parte; 
-            } 
-            return $final; 
-        } 
-
-    } //numerotexto
+    } 
+     
+    // Sacamos el resultado (primero invertimos el array) 
+    $resultado_inv= array_reverse($resultado, TRUE); 
+    $final=""; 
+    foreach ($resultado_inv as $parte){ 
+        $final.=$parte; 
+    } 
+    return $final; 
+} 
 }

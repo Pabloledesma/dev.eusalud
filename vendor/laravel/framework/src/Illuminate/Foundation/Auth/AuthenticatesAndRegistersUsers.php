@@ -107,7 +107,7 @@ trait AuthenticatesAndRegistersUsers {
 	{
 		$this->auth->logout();
 
-		return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/inicio');
+		return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : 'inicio');
 	}
 
 	/**

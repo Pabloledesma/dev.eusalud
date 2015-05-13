@@ -116,6 +116,7 @@ return [
 		 * Laravel Framework Service Providers...
 		 */
                 'Maatwebsite\Excel\ExcelServiceProvider',
+                //'Barryvdh\DomPDF\ServiceProvider',
                 'Vsmoraes\Pdf\PdfServiceProvider',
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
 		'Illuminate\Auth\AuthServiceProvider',
@@ -204,6 +205,7 @@ return [
                 'Html'      => 'Illuminate\Html\HtmlFacade',
                 'Excel'     => 'Maatwebsite\Excel\Facades\Excel',
                 'Flash'     => 'Laracast\Flash\Flash'
+                //'PDF'       => 'Barryvdh\DomPDF\Facade' problemas al cargar
             
           
 	],

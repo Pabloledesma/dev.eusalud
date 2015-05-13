@@ -50,6 +50,7 @@
 
 
 	</style>
+        <script language="JavaScript" type="text/javascript" src="{{ asset('/js/jquery-1.8.3.js') }}"></script>
 </head>
 <body>
     <!--<div class='logo'>
@@ -58,6 +59,6 @@
     <div class="no_border">
         @yield('content')
     </div>
-
+    
 </body>
 </html>

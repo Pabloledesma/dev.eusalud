@@ -19,17 +19,23 @@
                     <input type="text" class="form-control" name="fecha_final" id="fecha_final" value="{{ date('Y-m-d') }}" />
                 </div>
             </div>
+            @if($formato_de_salida == true)
             <div class="form-group">
+                
+                
                 <label class="control-label col-sm-2" for="fecha_final">Formato de salida: </label>
                 <div class="col-sm-4">
                     <label class="radio-inline"><input type="radio" name="formato" value="excel" {{$formato['excel'] ? '' : 'disabled' }}>Excel</label>
                     <label class="radio-inline"><input type="radio" name="formato" value="pdf" checked>Pdf</label>
                 </div>
+                
+                
             </div>
+            @endif
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-4">
-                    <input class="btn btn-green" type="submit" name="submit" id="submit" value="Descargar" />
+                    <input class="btn btn-green" type="submit" name="submit" id="submit" value="{{ $formato_de_salida == true ? 'Descargar' : 'Generar' }}" />
                 </div>
             </div>
         </form>
@@ -108,6 +114,7 @@
                     number: "Solo se admiten números en este campo."
                 }
             }
+            
         });
         
     });
