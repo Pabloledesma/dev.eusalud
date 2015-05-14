@@ -17,7 +17,7 @@
                     <th colspan="4">{{ $headerTitle }}</th>
                 </tr>
                 <tr id="tr_top">
-                    <td colspan="2"><img src="{{ asset('img/logo_colores.png') }}" width="300"></td>
+                    <td colspan="2"><!--<img src="img/logo_colores.png " width="300">-->logo</td>
                     <td colspan="2" style="text-align: center" id="head">
                         <p><b>EUSALUD S.A</b> <br>
                             NIT  800227072-8 <br>

@@ -318,6 +318,24 @@ class InfoController extends Controller {
             WHERE (((dbo.MOVCONT3.MvCFch) Between convert(datetime, '" . $input['fecha_inicio'] . "' ,101) And 
                     convert(datetime,'" . $input['fecha_final'] . "', 101)) AND ((dbo.MOVCONT3.MvCEst)<>'N') AND 
                     ((dbo.MOVCONT2.CntCod) Like '2368%') AND ((dbo.MOVCONT2.TrcCod)='".$num_id."'))";
+        
+        $query3 = "SELECT 
+            dbo.MOVCONT2.CntCod, 
+            dbo.CUENTAS.CntDsc, 
+            dbo.MOVCONT2.TrcCod, 
+            dbo.TERCEROS.TrcRazSoc, 
+            dbo.MOVCONT2.MvCNat, 
+            Sum(dbo.MOVCONT2.MvCVlr) AS SumaDeMvCVlr, 
+            Sum(dbo.MOVCONT2.MvCBse) AS SumaDeMvCBse
+        FROM ((dbo.MOVCONT3 INNER JOIN dbo.MOVCONT2 ON (dbo.MOVCONT3.MCDpto = dbo.MOVCONT2.MCDpto) AND 
+            (dbo.MOVCONT3.MvCNro = dbo.MOVCONT2.MvCNro) AND (dbo.MOVCONT3.DOCCOD = dbo.MOVCONT2.DOCCOD) AND 
+            (dbo.MOVCONT3.EMPCOD = dbo.MOVCONT2.EMPCOD)) LEFT JOIN dbo.CUENTAS ON 
+            (dbo.MOVCONT2.CntCod = dbo.CUENTAS.CntCod) AND (dbo.MOVCONT2.CntVig = dbo.CUENTAS.CntVig)) 
+            LEFT JOIN dbo.TERCEROS ON dbo.MOVCONT2.TrcCod = dbo.TERCEROS.TrcCod
+        WHERE (((dbo.MOVCONT3.MvCFch) Between convert(datetime, '" . $input['fecha_inicio'] . "' ,101) And 
+                    convert(datetime,'" . $input['fecha_final'] . "', 101)) AND ((dbo.MOVCONT3.MvCEst)<>'N')
+        GROUP BY dbo.MOVCONT2.CntCod, dbo.MOVCONT2.TrcCod, dbo.MOVCONT2.MvCNat
+        HAVING (((dbo.MOVCONT2.CntCod) Like '2368%') AND ((dbo.MOVCONT2.TrcCod)='".$num_id."'))";
 
         $query = "SELECT 
                 Sum( CASE WHEN mvcnat='D' THEN -1*(MvCVlr) ELSE MvCVlr END ) AS VALOR, 
@@ -338,22 +356,37 @@ class InfoController extends Controller {
         //return $valor_base;
         if (isset($info, $valor_base) && count($info) > 0 && count($valor_base) > 0) {
 
-//            
+/*            PDF
 //            $html = view('info.informe_ica_pdf', compact('info', 'input', 'headerTitle', 'valor_base', 'valor_en_letras'))->render();
 //            return $this->pdf->load($html)
 //                            ->filename($fileTitle . date('Y-m-d H:i:s') . '.pdf')
 //                            
 //                            ->download();
             
-           
-            $valor_en_letras = $this->numerotexto( $valor_base[0]->VALOR );
-            return view('info.informe_ica_pdf', compact('info', 'input', 'headerTitle', 'valor_base', 'valor_en_letras'));
+            //HTML
+//            return view('info.informe_ica_pdf', compact('info', 'input', 'headerTitle', 'valor_base', 'valor_en_letras'));
+*/            
             
- 
+            //EXCEL
+            $valor_en_letras = $this->numerotexto( $valor_base[0]->VALOR );
+            $this->excel->create('informe_ica', function($excel) use($info, $input, $headerTitle, $valor_base, $valor_en_letras) {
+                $excel->sheet('Sheetname', function($sheet) use($info, $input, $headerTitle, $valor_base, $valor_en_letras) {
+                    $sheet->loadview('info.informe_ica_pdf', compact('info', 'input', 'headerTitle', 'valor_base', 'valor_en_letras'));
+                    $sheet->setFontFamily('Comic Sans MS');
+                    $sheet->setStyle(array(
+                        'font' => array(
+                            'name'      =>  'Calibri',
+                            'size'      =>  12,
+                            'bold'      =>  true
+                        )
+                    ));
+                });
+            })->download('xlsx');
         }
-
+ 
         return view('info.sin_resultados', compact('headerTitle'));
     }
+        
 
     /**
     * Convierte un valor numérico a letras

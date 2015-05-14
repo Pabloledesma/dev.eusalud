@@ -13,7 +13,7 @@ class AddUserTypeToUser extends Migration {
 	public function up()
 	{
             Schema::table('users', function( Blueprint $table ){
-                $table->enum('user_type', ['Super Admin', 'Admin', 'User']);
+                $table->enum('user_type', ['Super Admin', 'Admin', 'User', 'Provider']);
             });
 	}
 
