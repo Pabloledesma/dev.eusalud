@@ -14,10 +14,10 @@
         <div class="row-fluid">
             <table>
                 <tr>
-                    <th colspan="4">{{ $headerTitle }}</th>
+                    <th colspan="5">{{ $headerTitle }}</th>
                 </tr>
                 <tr id="tr_top">
-                    <td colspan="2"><!--<img src="img/logo_colores.png " width="300">-->logo</td>
+                    <td colspan="3"><img src="{{ asset('img/logo_colores.png') }}" width="300"></td>
                     <td colspan="2" style="text-align: center" id="head">
                         <p><b>EUSALUD S.A</b> <br>
                             NIT  800227072-8 <br>
@@ -27,26 +27,30 @@
                 
                 
                 <tr>
-                    <td>CONTRIBUYENTE: </td>
+                    <td colspan="2">CONTRIBUYENTE: </td>
                     <td>{{ $info[0]->TrcRazSoc }}</td>
                     <td>NIT: </td>
                     <td>{{ $info[0]->TrcCod }}</td>
                 <tr>
                 <tr>
-                    <th colspan="2">CONCEPTO</th>
+                    <th>CONCEPTO</th>
+                    <th>NOMBRE CONCEPTO</th>
+                    <th>NATURALEZA</th>
                     <th>VALOR RETENIDO</th>
                     <th>VALOR BASE</th>  
                 </tr>
+                
                 @foreach($info as $row)
                 <tr>
                     <td>{{ $row->CntCod }}</td>             <!-- Concepto -->
                     <td>{{ $row->CntDsc }}</td>             <!-- Nombre del Concepto -->
-                    <td>{{ '$' . number_format($row->MvCVlr) }}</td>             <!-- Valor Retenido -->
-                    <td>{{ '$' . number_format($row->MvCBse) }}</td>             <!-- Valor Base -->
+                    <td>{{ $row->MvCNat }}</td>
+                    <td>{{ '$' . number_format($row->SumaDeMvCVlr) }}</td>             <!-- Valor Retenido -->
+                    <td>{{ '$' . number_format($row->SumaDeMvCBse) }}</td>             <!-- Valor Base -->
                 </tr>
                 @endforeach
                 <tr>
-                    <td colspan="2" style="text-align:right">TOTALES</td>
+                    <td colspan="3" style="text-align:right; font-weight: bold">TOTALES</td>
                     <td><p class="total">{{ '$' . number_format($valor_base[0]->VALOR) }}</p></td>
                     <td><p class="total">{{ '$' . number_format($valor_base[0]->BASE) }}</p></td>
                 </tr>
